@@ -47,6 +47,29 @@ async function savePhraseToCloud(type, phrase) {
   })
 }
 
+function startRealtimeListener() {
+  const q = collection(db, "phrases")
+
+  onSnapshot(q, (snapshot) => {
+    snapshot.docChanges().forEach(change => {
+      if (change.type === "added") {
+        const data = change.doc.data()
+
+        // すでに存在するフレーズは重複追加しない
+        if (data.type === "5" && !phrases5.includes(data.text)) {
+          phrases5.push(data.text)
+        }
+        if (data.type === "7" && !phrases7.includes(data.text)) {
+          phrases7.push(data.text)
+        }
+      }
+    })
+
+    console.log("✅ リアルタイム更新：phrases が更新されました")
+  })
+}
+
+
 
 // ===============================
 //  バリデーション（スパム対策）
@@ -134,8 +157,11 @@ fetch("data/phrases.json")
     phrases5 = data.phrases5
     phrases7 = data.phrases7
 
-    loadUserPhrases()      // LocalStorage
-    await loadCloudPhrases() // Firestore
+    loadUserPhrases() // LocalStorage
 
-    console.log("フレーズ読み込み完了")
+    // ✅ Firestore のリアルタイム監視を開始
+    startRealtimeListener()
+
+    console.log("✅ 初期データ読み込み完了（リアルタイム監視開始）")
   })
+
