@@ -117,9 +117,21 @@ document.getElementById("addBtn").addEventListener("click", async () => {
   const type = document.getElementById("type").value
   const phrase = document.getElementById("newPhrase").value.trim()
 
-  if (!validatePhrase(phrase)) {
+  if (!validatePhrase(phrase, type)) {
     document.getElementById("addMessage").textContent =
       "使用できない文字、または長すぎるフレーズです。"
+    return
+  }
+
+  // ✅ 重複チェック（ここを追加）
+  if (type === "5" && phrases5.includes(phrase)) {
+    document.getElementById("addMessage").textContent =
+      "この5音フレーズはすでに登録されています。"
+    return
+  }
+  if (type === "7" && phrases7.includes(phrase)) {
+    document.getElementById("addMessage").textContent =
+      "この7音フレーズはすでに登録されています。"
     return
   }
 
