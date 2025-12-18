@@ -68,15 +68,20 @@ async function savePhraseToCloud(type, phrase) {
 // ===============================
 //  バリデーション（スパム対策）
 // ===============================
-function validatePhrase(phrase) {
-  if (phrase.length < 2) return false
+function validatePhrase(phrase, type) {
+  // 共通の禁止条件
   if (phrase.length > 20) return false
-
-  // 許可する文字：ひらがな・カタカナ・漢字・英数字・長音符
   if (!/^[ぁ-んァ-ン一-龥ーa-zA-Z0-9]+$/.test(phrase)) return false
+
+  // 5音用の最低文字数
+  if (type === "5" && phrase.length < 5) return false
+
+  // 7音用の最低文字数
+  if (type === "7" && phrase.length < 7) return false
 
   return true
 }
+
 
 
 // ===============================
