@@ -56,13 +56,15 @@ function startRealtimeListener() {
 // ===============================
 //  Firestore 保存
 // ===============================
+import { setDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 async function savePhraseToCloud(type, phrase) {
-  await addDoc(collection(db, "phrases"), {
+  await setDoc(doc(db, "phrases", phrase), {
     type: type,
-    text: phrase,
     createdAt: Date.now()
-  })
+  });
 }
+
 
 
 // ===============================
