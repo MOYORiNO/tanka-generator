@@ -48,8 +48,23 @@
       <div class="mt-6 text-center"> <a href="phrases.html" class="text-blue-600 underline">フレーズ一覧を見る</a> </div>
     </div>
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js" import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js" window.firebaseConfig = { apiKey: "AIzaSyAMdcEv6Bm9XnbU4oHguB0p-ObiMi97PuM", authDomain: "tanka-generator.firebaseapp.com", projectId: "tanka-generator" } window.firebaseApp = initializeApp(window.firebaseConfig) window.db = getFirestore(window.firebaseApp)
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import { getFirestore, collection, addDoc, getDocs, onSnapshot } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    
+      const firebaseConfig = {
+        apiKey: "AIzaSyAMdcEv6Bm9XnbU4oHguB0p-ObiMi97PuM",
+        authDomain: "tanka-generator.firebaseapp.com",
+        projectId: "tanka-generator"
+      };
+    
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+    
+      // グローバルに使いたい場合
+      window.db = db;
     </script>
+
     <script src="script.js"></script>
   </body>
 </html>
