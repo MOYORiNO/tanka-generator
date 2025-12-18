@@ -145,7 +145,7 @@ document.getElementById("addBtn").addEventListener("click", async () => {
 // ===============================
 //  アプリ起動時：JSON → LocalStorage → Firestore（リアルタイム）
 // ===============================
-fetch("data/phrases.json")
+fetch("data/phrase.json")
   .then(res => res.json())
   .then(async data => {
     phrases5 = data.phrases5
