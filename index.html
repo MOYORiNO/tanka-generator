@@ -45,7 +45,9 @@
   
       <p id="addMessage" class="text-sm text-gray-600 mt-2 text-center"></p>
     </div>
-  
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js" import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js" window.firebaseConfig = { apiKey: "AIzaSyAMdcEv6Bm9XnbU4oHguB0p-ObiMi97PuM", authDomain: "tanka-generator.firebaseapp.com", projectId: "tanka-generator" } window.firebaseApp = initializeApp(window.firebaseConfig) window.db = getFirestore(window.firebaseApp)
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
