@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>しょうもない短歌ジェネレーター</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+  <h1 class="text-2xl font-bold mb-4">しょうもない短歌ジェネレーター</h1>
+  <p class="mb-4">ランダムで5・7・5・7・7の短歌を生成します。</p>
+
+  <button id="generateBtn"
+    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+    短歌をつくる
+  </button>
+
+  <div id="tanka" class="mt-6 p-4 bg-white rounded shadow w-fit hidden">
+    <div id="line1" class="tanka-line"></div>
+    <div id="line2" class="tanka-line"></div>
+    <div id="line3" class="tanka-line"></div>
+    <div id="line4" class="tanka-line"></div>
+    <div id="line5" class="tanka-line"></div>
+  </div>
+
+  <h2 class="text-xl font-semibold mt-10 mb-2">フレーズを追加する</h2>
+
+  <div class="flex gap-2 mb-2">
+    <select id="type" class="border rounded px-2 py-1">
+      <option value="5">5音フレーズ</option>
+      <option value="7">7音フレーズ</option>
+    </select>
+
+    <input id="newPhrase" type="text" placeholder="新しいフレーズ"
+      class="border rounded px-2 py-1 flex-1">
+
+    <button id="addBtn"
+      class="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition">
+      追加
+    </button>
+  </div>
+
+  <p id="addMessage" class="text-sm text-gray-600"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
