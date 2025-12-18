@@ -44,6 +44,8 @@
       </div>
   
       <p id="addMessage" class="text-sm text-gray-600 mt-2 text-center"></p>
+
+      <div class="mt-6 text-center"> <a href="phrases.html" class="text-blue-600 underline">フレーズ一覧を見る</a> </div>
     </div>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js" import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js" window.firebaseConfig = { apiKey: "AIzaSyAMdcEv6Bm9XnbU4oHguB0p-ObiMi97PuM", authDomain: "tanka-generator.firebaseapp.com", projectId: "tanka-generator" } window.firebaseApp = initializeApp(window.firebaseConfig) window.db = getFirestore(window.firebaseApp)
