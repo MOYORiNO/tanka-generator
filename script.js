@@ -28,25 +28,8 @@ function saveUserPhrase(type, phrase) {
 
 
 // ===============================
-//  Firestore 読み込み・保存
+//  Firestore リアルタイム監視
 // ===============================
-async function loadCloudPhrases() {
-  const snapshot = await getDocs(collection(db, "phrases"))
-  snapshot.forEach(doc => {
-    const data = doc.data()
-    if (data.type === "5") phrases5.push(data.text)
-    if (data.type === "7") phrases7.push(data.text)
-  })
-}
-
-async function savePhraseToCloud(type, phrase) {
-  await addDoc(collection(db, "phrases"), {
-    type: type,
-    text: phrase,
-    createdAt: Date.now()
-  })
-}
-
 function startRealtimeListener() {
   const q = collection(db, "phrases")
 
@@ -55,7 +38,7 @@ function startRealtimeListener() {
       if (change.type === "added") {
         const data = change.doc.data()
 
-        // すでに存在するフレーズは重複追加しない
+        // 重複追加を防ぐ
         if (data.type === "5" && !phrases5.includes(data.text)) {
           phrases5.push(data.text)
         }
@@ -69,6 +52,17 @@ function startRealtimeListener() {
   })
 }
 
+
+// ===============================
+//  Firestore 保存
+// ===============================
+async function savePhraseToCloud(type, phrase) {
+  await addDoc(collection(db, "phrases"), {
+    type: type,
+    text: phrase,
+    createdAt: Date.now()
+  })
+}
 
 
 // ===============================
@@ -148,8 +142,9 @@ document.getElementById("addBtn").addEventListener("click", async () => {
   document.getElementById("newPhrase").value = ""
 })
 
+
 // ===============================
-//  アプリ起動時：JSON → LocalStorage → Firestore
+//  アプリ起動時：JSON → LocalStorage → Firestore（リアルタイム）
 // ===============================
 fetch("data/phrases.json")
   .then(res => res.json())
@@ -164,4 +159,3 @@ fetch("data/phrases.json")
 
     console.log("✅ 初期データ読み込み完了（リアルタイム監視開始）")
   })
-
