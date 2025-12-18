@@ -76,10 +76,10 @@ function validatePhrase(phrase, type) {
   if (!/^[ぁ-んァ-ン一-龥ーa-zA-Z0-9]+$/.test(phrase)) return false
 
   // 5音用の最低文字数
-  if (type === "5" && phrase.length < 5) return false
+  if (type === "5" && phrase.length < 3) return false
 
   // 7音用の最低文字数
-  if (type === "7" && phrase.length < 7) return false
+  if (type === "7" && phrase.length < 4) return false
 
   return true
 }
