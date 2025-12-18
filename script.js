@@ -58,11 +58,14 @@ function startRealtimeListener() {
 // ===============================
 
 async function savePhraseToCloud(type, phrase) {
-  await setDoc(doc(db, "phrases", phrase), {
+   await setDoc(doc(db, "phrases", phrase), {
     type: type,
+    text: phrase,
     createdAt: Date.now()
   });
 }
+
+
 
 
 
