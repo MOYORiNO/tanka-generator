@@ -2,7 +2,7 @@ let phrases5 = [];
 let phrases7 = [];
 
 // JSONファイルを読み込む
-fetch("data/phrases.json")
+fetch("data/phrase.json")
   .then(response => response.json())
   .then(data => {
     phrases5 = data.phrases5;
