@@ -100,7 +100,6 @@ function generateTanka() {
   document.getElementById("line5").textContent = line5
 
   document.getElementById("tanka").classList.remove("hidden")
-  document.getElementById("saveImageBtn").classList.remove("hidden")
 }
 
 document.getElementById("generateBtn").addEventListener("click", generateTanka)
