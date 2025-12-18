@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>フレーズ一覧</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-4 sm:p-6">
+  <div class="max-w-md mx-auto">
+    <h1 class="text-2xl font-bold mb-4 text-center">フレーズ一覧</h1>
+
+    <p class="text-center text-gray-600 mb-6">
+      Firestore に保存されたフレーズをリアルタイムで表示します。
+    </p>
+
+    <!-- 5音 -->
+    <h2 class="text-xl font-semibold mt-6 mb-2">5音フレーズ</h2>
+    <ul id="list5" class="bg-white p-4 rounded shadow space-y-2"></ul>
+
+    <!-- 7音 -->
+    <h2 class="text-xl font-semibold mt-6 mb-2">7音フレーズ</h2>
+    <ul id="list7" class="bg-white p-4 rounded shadow space-y-2"></ul>
+
+    <div class="mt-8 text-center">
+      <a href="index.html" class="text-blue-600 underline">← 短歌ジェネレーターに戻る</a>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"
+
+    // ✅ あなたの Firebase 設定をここに貼る
+    const firebaseConfig = {
+      apiKey: "AIzaSyAMdcEv6Bm9XnbU4oHguB0p-ObiMi97PuM",
+      authDomain: "tanka-generator.firebaseapp.com",
+      projectId: "tanka-generator"
+    }
+
+    const app = initializeApp(firebaseConfig)
+    const db = getFirestore(app)
+
+    const list5 = document.getElementById("list5")
+    const list7 = document.getElementById("list7")
+
+    // ✅ Firestore リアルタイム監視
+    onSnapshot(collection(db, "phrases"), (snapshot) => {
+      list5.innerHTML = ""
+      list7.innerHTML = ""
+
+      snapshot.forEach(doc => {
+        const data = doc.data()
+        const li = document.createElement("li")
+        li.textContent = data.text
+        li.className = "border-b pb-1"
+
+        if (data.type === "5") list5.appendChild(li)
+        if (data.type === "7") list7.appendChild(li)
+      })
+    })
+  </script>
+</body>
+</html>
