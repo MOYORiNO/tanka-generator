@@ -7,6 +7,17 @@ let phrases7 = []
 // 連続投稿防止（30秒）
 let lastPostTime = 0
 
+let tokenizer = null;
+
+// kuromoji の初期化
+kuromoji.builder({ dicPath: "dict" }).build((err, t) => {
+  if (err) {
+    console.error("kuromoji の初期化に失敗:", err);
+    return;
+  }
+  tokenizer = t;
+  console.log("✅ kuromoji 初期化完了");
+});
 
 // ===============================
 //  JSON + LocalStorage 読み込み
@@ -67,24 +78,47 @@ async function savePhraseToCloud(type, phrase) {
 
 
 
+function getReading(text) {
+  if (!tokenizer) return null;
+
+  const tokens = tokenizer.tokenize(text);
+  return tokens
+    .map(t => t.reading || t.surface_form) // 読みがない場合は原文
+    .join("");
+}
+function countMora(kana) {
+  // カタカナと長音符だけを対象にする
+  return kana.replace(/[^ァ-ンー]/g, "").length;
+}
 
 
 // ===============================
 //  バリデーション（スパム対策）
 // ===============================
-function validatePhrase(phrase, type) {
-  // 共通の禁止条件
-  if (phrase.length > 20) return false
-  if (!/^[ぁ-んァ-ン一-龥ーa-zA-Z0-9]+$/.test(phrase)) return false
+async function validatePhrase(phrase, type) {
+  if (!tokenizer) {
+    console.warn("tokenizer がまだ初期化されていません");
+    return false;
+  }
 
-  // 5音用の最低文字数
-  if (type === "5" && phrase.length < 3) return false
+  // 読み（カタカナ）を取得
+  const reading = getReading(phrase);
+  if (!reading) return false;
 
-  // 7音用の最低文字数
-  if (type === "7" && phrase.length < 4) return false
+  // 音数を数える
+  const mora = countMora(reading);
 
-  return true
+  console.log("読み:", reading, "音数:", mora);
+
+  // ✅ 5音 → ちょうど5モーラ
+  if (type === "5" && mora !== 5) return false;
+
+  // ✅ 7音 → 7〜8モーラを許可
+  if (type === "7" && !(mora === 7 || mora === 8)) return false;
+
+  return true;
 }
+
 
 
 
