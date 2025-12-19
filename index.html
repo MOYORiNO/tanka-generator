@@ -36,7 +36,10 @@
   
         <input id="newPhrase" type="text" placeholder="新しいフレーズ"
           class="border rounded px-3 py-2 text-lg">
-  
+
+        <label>読み（ひらがな）</label>
+        <input id="readingInput" type="text" placeholder="よみを入力してください">
+
         <button id="addBtn"
           class="w-full py-3 bg-green-600 text-white rounded-lg text-lg font-semibold hover:bg-green-700 transition">
           追加
@@ -47,7 +50,7 @@
 
       <div class="mt-6 text-center"> <a href="phrases.html" class="text-blue-600 underline">フレーズ一覧を見る</a> </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dist/kuromoji.js"></script>
+    
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
       import { 
